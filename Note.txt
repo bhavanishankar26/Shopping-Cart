@@ -1,0 +1,8 @@
+Install JDK
+Install Jenkins
+Git Clone "Shopping Cart" Project
+
+
+Plugins :  Mavin
+
+
