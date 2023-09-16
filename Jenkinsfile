@@ -24,6 +24,7 @@ pipeline {
             steps {
                 sh "mvn clean compile"
             }
+           // Plug Ins -- Eclipse Temurin installer Plugin , openJDK-native-plugin ,Oracle Java SE Development Kit Installer
         }
         
         stage('Sonarqube Analysis') {
@@ -31,6 +32,9 @@ pipeline {
                         sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.url=http://3.109.1.198:9000/ -Dsonar.login=squ_0b16f660e5bc4514a3d8da45c5b9b896a6931f15 -Dsonar.projectName=shopping-cart \
                         -Dsonar.java.binaries=. \
                         -Dsonar.projectKey=shopping-cart '''
+                // Plugins installed  -   SonarQube Scanner for Jenkins,
+                // Defined inside ManageJenkins->Tools->sonar-scanner
+                // Public IP address will be changed after restarting the Jenkins Server .
             }
         }
         stage('OWASP Scan') {
@@ -50,6 +54,8 @@ pipeline {
             environment {
                 // Define the target repository in Artifactory
                 TARGET_REPO = 'my-local-repo'
+
+                  // Plugin installed -  JFrog , Artifactory , Artifact Repository Parameter Plugin
             }
             
             steps {
@@ -80,6 +86,10 @@ pipeline {
                     sh "docker tag shopping-cart:latest gadebhavani26/shopping-cart:latest"
                     sh "docker push gadebhavani26/shopping-cart:latest"
                     }
+                    // Plug in -CloudBees Docker Build and Publish plugin 1.4.0
+                    // Docker Version1.4
+                    // Docker Pipeline
+                    //docker-build-step
                 }
             }
         }
@@ -97,6 +107,8 @@ pipeline {
         stage('Trigger CD pipeline'){
            steps{
                build job:"CD",wait: true
+
+               // K8s Ingress service will be used for delivering the application inside CD pipeline
            }
         }
     }
